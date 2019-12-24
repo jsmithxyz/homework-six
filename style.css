@@ -1,0 +1,31 @@
+.wrapper {
+    width: 1024px;
+    margin: auto;
+    height: 100vh;
+}
+
+.conditions {
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    margin: 20px;
+    justify-content: center;
+}
+
+.navbar {
+    justify-content: center;
+}
+
+.col-md-4#searchArea {
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    margin-top: 20px;
+}
+
+#fiveDayBox {
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    margin-top: 20px;
+}

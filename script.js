@@ -1,8 +1,6 @@
 $(document).ready(function() {
 
     var API_KEY = "e0e304094102eac6a91aae0440b16040";
-    
-    
 
     function currentConditions(city) {
        var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=" + API_KEY;
@@ -11,13 +9,12 @@ $(document).ready(function() {
             url: queryURL,
             method: "GET",
         }).then(function(response){
-            console.log(response);
 
-            var cityName = $("<div>");
-            cityName.text("City: " + response.name);
+            var cityName = $("<h2>");
+            cityName.text(response.name);
 
-            var dateNow = $("<div>");
-            dateNow.text("Date: " + moment().format('LLLL'));
+            var dateNow = $("<h2>");
+            dateNow.text(moment().format('L'));
 
             var weatherIcon = $("<img>");
             weatherIcon.attr("src", "http://openweathermap.org/img/wn/"+response.weather[0].icon+"@2x.png");
@@ -33,9 +30,9 @@ $(document).ready(function() {
             var windSpeed = $("<div>");
             windSpeed.text("Wind Speed: " + response.wind.speed + " MPH");
 
-            cityName.appendTo(".conditions");
-            dateNow.appendTo(".conditions");
-            weatherIcon.appendTo(".conditions");
+            cityName.appendTo("#cityDateIcon");
+            dateNow.appendTo("#cityDateIcon");
+            weatherIcon.appendTo("#cityDateIcon");
             temperature.appendTo(".conditions");
             humidity.appendTo(".conditions");
             windSpeed.appendTo(".conditions");
@@ -44,6 +41,7 @@ $(document).ready(function() {
             var lat = response.coord.lat;
             
             uvIndex(lat, lon); 
+
         });
         
     }
@@ -74,8 +72,12 @@ $(document).ready(function() {
  
         })
     }
-
-     currentConditions("Philadelphia");
-     fiveDay("Philadelphia");
+    
+    $("#searchBtn").on("click", function(){
+        event.preventDefault();
+        var city = $("#inputCity").val();
+        currentConditions(city);
+    })
+     
    
 })

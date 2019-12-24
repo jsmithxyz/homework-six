@@ -7,12 +7,50 @@
     <title>Weather Dashboard</title>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-     <script src="script.js"></script>
+    <script src="script.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+    
 </head>
 <body>
 
-    <div class="conditions"></div>
+    <div class="container-fluid">
+        <nav class="navbar navbar-dark bg-dark">
+         <a class="navbar-brand" href="index.html">Weather Dashboard</a>
+        </nav>
+    </div>
+ <div class="wrapper">
+    <div class="row" id="row1">
+        <div class="col-md-4" id="searchArea">
+        <form class="form-inline">
+            <div class="form-group mx-sm-3 mb-2">
+              <input class="form-control" id="inputCity" placeholder="City Name">
+            </div>
+            <button type="submit" class="btn btn-primary mb-2" id="searchBtn">Submit</button>
+          </form>
+        </div>
+
+        <div class="col-md-8">
+            <div class="conditions">
+                <h1 id="cityDateIcon"></h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" id="row2">
+        <div class="col-md-4"></div>
+        <div class="col-md-8" id="fiveDayBox">
+            5-DAY FORECAST GOES HERE!
+        </div>
+        
+    </div>
+</div>
+
+    
     
 </body>
 </html>
