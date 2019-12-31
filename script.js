@@ -30,9 +30,12 @@ $(document).ready(function() {
             var windSpeed = $("<div>");
             windSpeed.text("Wind Speed: " + response.wind.speed + " MPH");
 
-            cityName.appendTo("#cityDateIcon");
-            dateNow.appendTo("#cityDateIcon");
-            weatherIcon.appendTo("#cityDateIcon");
+            var cityDateIcon = $("<div>")
+
+            cityName.appendTo(cityDateIcon);
+            dateNow.appendTo(cityDateIcon);
+            weatherIcon.appendTo(cityDateIcon);
+            cityDateIcon.appendTo(".conditions");
             temperature.appendTo(".conditions");
             humidity.appendTo(".conditions");
             windSpeed.appendTo(".conditions");
@@ -68,16 +71,17 @@ $(document).ready(function() {
              url: queryURL,
              method: "GET",
          }).then(function(response){
-             console.log(response);
- 
+            console.log(response);
+
         })
     }
     
     $("#searchBtn").on("click", function(){
         event.preventDefault();
+        $(".conditions").empty();
         var city = $("#inputCity").val();
         currentConditions(city);
+        fiveDay(city);
     })
      
-   
 })
