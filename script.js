@@ -82,6 +82,30 @@ $(document).ready(function() {
         var city = $("#inputCity").val();
         currentConditions(city);
         fiveDay(city);
+        
+        var cityBtn = $("<button>");
+        cityBtn.addClass("cityButton");
+        cityBtn.text(city);
+        cityBtn.appendTo("#searchArea");
+
+        $("#inputCity").empty();
+
+        $(".cityButton").on("click", function(){
+            console.log("i've been clicked!"); 
+            event.preventDefault();
+            $(".conditions").empty();
+            city = cityBtn.text();
+            currentConditions(city);
+            fiveDay(city);
+        })
+
+        return city;
+
     })
-     
+
+    
+    
+
+    
 })
+

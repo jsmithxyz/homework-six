@@ -30,3 +30,7 @@
     margin-top: 20px;
 }
 
+#subrow-2 {
+    float: left;
+    clear:both;
+}
