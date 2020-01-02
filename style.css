@@ -34,3 +34,7 @@
     float: left;
     clear:both;
 }
+
+button {
+    margin: 5px;
+}

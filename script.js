@@ -1,5 +1,8 @@
 $(document).ready(function() {
 
+    var cityBtn = $("<button>");
+    var cities = [];
+
     var API_KEY = "e0e304094102eac6a91aae0440b16040";
 
     function currentConditions(city) {
@@ -76,35 +79,45 @@ $(document).ready(function() {
         })
     }
     
-    $("#searchBtn").on("click", function(){
+    $("#searchBtn").on("click", function(event){
         event.preventDefault();
         $(".conditions").empty();
-        var city = $("#inputCity").val();
+        var city = $("#inputCity").val().trim();
+
+        cities.push(city);
+
         currentConditions(city);
         fiveDay(city);
-        
-        var cityBtn = $("<button>");
-        cityBtn.addClass("cityButton");
-        cityBtn.text(city);
-        cityBtn.appendTo("#searchArea");
-
-        $("#inputCity").empty();
-
-        $(".cityButton").on("click", function(){
-            console.log("i've been clicked!"); 
-            event.preventDefault();
-            $(".conditions").empty();
-            city = cityBtn.text();
-            currentConditions(city);
-            fiveDay(city);
-        })
-
-        return city;
+        renderCities();
 
     })
 
+    $("#searchArea").on("click", function(event){
+        if(event.target.matches("button.cityButton")) {
+            event.preventDefault();
+            $(".conditions").empty();
+
+            var city = $(event.target).text();
+
+            currentConditions(city);
+            fiveDay(city);
+      }});
+
+
     
-    
+    function renderCities() {
+
+        $(".btnArea").empty();
+
+        for (var i = 0; i < cities.length; i++) {
+          var a = $("<button>");
+          a.addClass("cityButton");
+          a.attr("data-name", cities[i]);
+          a.text(cities[i]);
+
+          $(".btnArea").append(a);
+        }
+      }
 
     
 })
