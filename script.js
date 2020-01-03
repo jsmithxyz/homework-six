@@ -135,10 +135,11 @@ $(document).ready(function() {
     $("#searchArea").on("click", function(event){
         if(event.target.matches("button.cityButton")) {
             event.preventDefault();
-            $(".conditions").empty();
+            
 
             var city = $(event.target).text();
             for(var i = 0; i < cities.length; i++) {
+                $(".conditions").empty();
                 if (city === cities[i]) {
                     currentConditions(city);
                     fiveDay(city);
