@@ -1,3 +1,7 @@
+body {
+    background-color: lightcyan;
+}
+
 .wrapper {
     width: 1300px;
     margin: auto;
@@ -8,6 +12,7 @@
     margin:20px;
     text-align: center;
     font-family: 'Bree Serif', serif;
+    color: #343a40;
     
 }
 .conditionsHeader {
@@ -22,6 +27,7 @@
 .navbar {
     justify-content: center;
     font-family: 'Bree Serif', serif;
+   
 }
 
 a.navbar-brand {
@@ -51,7 +57,12 @@ a.navbar-brand {
     color: white;
     text-align: center;
     border-radius: 25px;
+    border-width: thin;
+    border: solid;
+    border-color:#343a40;
 }
+
+
  
 img.forecastIcons {
     height: 70px;
@@ -78,5 +89,5 @@ button {
     border-width: thick;
     border-color: lightblue;
     background-color: white;
-    color: black;
+    color: #343a40;
 }
