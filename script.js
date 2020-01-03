@@ -1,9 +1,12 @@
 $(document).ready(function() {
-
-    var cityBtn = $("<button>");
+    
     var cities = [];
 
+    var cityBtn = $("<button>");
+
     var API_KEY = "e0e304094102eac6a91aae0440b16040";
+
+    renderCitiesOnRefresh();
 
     function currentConditions(city) {
        var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=" + API_KEY;
@@ -14,9 +17,11 @@ $(document).ready(function() {
         }).then(function(response){
 
             var cityName = $("<h2>");
+            cityName.addClass("headerStyle");
             cityName.text(response.name);
 
             var dateNow = $("<h2>");
+            cityName.addClass("headerStyle");
             dateNow.text(moment().format('L'));
 
             var weatherIcon = $("<img>");
@@ -34,6 +39,7 @@ $(document).ready(function() {
             windSpeed.text("Wind Speed: " + response.wind.speed + " MPH");
 
             var cityDateIcon = $("<div>")
+            cityDateIcon.addClass("conditionsHeader");
 
             cityName.appendTo(cityDateIcon);
             dateNow.appendTo(cityDateIcon);
@@ -75,19 +81,52 @@ $(document).ready(function() {
              method: "GET",
          }).then(function(response){
             console.log(response);
+            $("#fiveDayBox").empty();
+            var counter = 1;
 
-        })
+            for(var i = 3; i < response.list.length; i+=8) {
+                 
+                var card = $("<div>");
+                card.addClass("forecastCard");
+
+                var date = $("<p>");
+                date.text(moment(moment(response.list[i].dt_txt).add(counter, 'days')).format('L'));
+                date.appendTo(card);
+
+                var symbol = $("<img>");
+                symbol.addClass("forecastIcons");
+                symbol.attr("src", "http://openweathermap.org/img/wn/"+response.list[i].weather[0].icon+"@2x.png");
+                symbol.appendTo(card);
+
+                var kelvin = response.list[i].main.temp_max;
+                var fahrenheit = (kelvin - 273.15) * (9/5) + 32;
+                var temperature = $("<p>");
+                temperature.text("Temperature: " + fahrenheit.toFixed(1) + "°F");
+                temperature.appendTo(card);
+
+                var humidity = $("<p>");
+                humidity.text("Humidity: " + response.list[i].main.humidity);
+                humidity.appendTo(card);
+
+
+                $("#fiveDayBox").append(card);
+            }
+    
+    });
+
     }
     
     $("#searchBtn").on("click", function(event){
         event.preventDefault();
         $(".conditions").empty();
         var city = $("#inputCity").val().trim();
-
         cities.push(city);
 
         currentConditions(city);
         fiveDay(city);
+
+        localStorage.setItem("citiesSearched", JSON.stringify(cities));
+        
         renderCities();
 
     })
@@ -98,6 +137,9 @@ $(document).ready(function() {
             $(".conditions").empty();
 
             var city = $(event.target).text();
+            cities.push(city);
+
+            localStorage.setItem("citiesSearched", JSON.stringify(cities));
 
             currentConditions(city);
             fiveDay(city);
@@ -116,9 +158,42 @@ $(document).ready(function() {
           a.text(cities[i]);
 
           $(".btnArea").append(a);
+
+          localStorage.setItem("citiesSearched", JSON.stringify(cities));
         }
       }
 
-    
+      function renderCitiesOnRefresh() {
+        var retrievedCities = localStorage.getItem("citiesSearched");
+        var citiesReturned = JSON.parse(retrievedCities);
+        if (citiesReturned != null) {
+        var cities = citiesReturned;
+        }
+        else {
+            return;
+        }
+
+        $(".btnArea").empty();
+
+          var a = $("<button>");
+          a.addClass("cityButton");
+          a.attr("data-name", cities[cities.length - 1]);
+          a.text(cities[cities.length - 1]);
+
+          $(".btnArea").append(a);
+
+
+        currentConditions(cities[cities.length - 1]);
+        fiveDay(cities[cities.length - 1]);
+
+        cities = [cities[cities.length - 1]];
+
+        localStorage.setItem("citiesSearched", JSON.stringify(cities));
+
+        return cities;
+        
+      }
+
+
 })
 

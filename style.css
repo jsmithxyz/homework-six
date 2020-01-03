@@ -1,15 +1,22 @@
 .wrapper {
-    width: 1024px;
+    width: 1300px;
     margin: auto;
     height: 100vh;
 }
 
 .conditions {
-    border-style: solid;
-    border-width: 1px;
-    border-color: black;
-    margin: 20px;
+    margin:20px;
+    display: flex;
     justify-content: center;
+    
+}
+.conditionsHeader {
+    display: flex;
+    display: center;
+    
+}
+.headerStyle {
+    margin-right:10px;
 }
 
 .navbar {
@@ -24,11 +31,27 @@
 }
 
 #fiveDayBox {
-    border-style: solid;
-    border-width: 1px;
-    border-color: black;
     margin-top: 20px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
 }
+
+.forecastCard {
+    float: left;
+    margin: 5px;
+    padding: 5px;
+    background-color: lightblue;
+    color: white;
+    text-align: center;
+    border-radius: 25px;
+}
+ 
+img.forecastIcons {
+    height: 70px;
+    width: 70px;
+}
+
 
 #subrow-2 {
     float: left;
