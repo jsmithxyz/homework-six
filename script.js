@@ -16,11 +16,11 @@ $(document).ready(function() {
             method: "GET",
         }).then(function(response){
 
-            var cityName = $("<h2>");
+            var cityName = $("<h1>");
             cityName.addClass("headerStyle");
             cityName.text(response.name);
 
-            var dateNow = $("<h2>");
+            var dateNow = $("<h1>");
             cityName.addClass("headerStyle");
             dateNow.text(moment().format('L'));
 
@@ -129,6 +129,7 @@ $(document).ready(function() {
         
         renderCities();
 
+
     })
 
     $("#searchArea").on("click", function(event){
@@ -137,12 +138,18 @@ $(document).ready(function() {
             $(".conditions").empty();
 
             var city = $(event.target).text();
+            for(var i = 0; i < cities.length; i++) {
+                if (city === cities[i]) {
+                    currentConditions(city);
+                    fiveDay(city);
+                    return;
+                }
+            }
             cities.push(city);
 
             localStorage.setItem("citiesSearched", JSON.stringify(cities));
 
-            currentConditions(city);
-            fiveDay(city);
+            
       }});
 
 
@@ -160,6 +167,7 @@ $(document).ready(function() {
           $(".btnArea").append(a);
 
           localStorage.setItem("citiesSearched", JSON.stringify(cities));
+
         }
       }
 

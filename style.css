@@ -6,27 +6,33 @@
 
 .conditions {
     margin:20px;
-    display: flex;
-    justify-content: center;
+    text-align: center;
+    font-family: 'Bree Serif', serif;
     
 }
 .conditionsHeader {
-    display: flex;
-    display: center;
+    text-align: center;
     
 }
 .headerStyle {
     margin-right:10px;
+    text-align: center;
 }
 
 .navbar {
     justify-content: center;
+    font-family: 'Bree Serif', serif;
+}
+
+a.navbar-brand {
+    font-size: 30px;
+}
+
+#searchArea {
+    text-align: center;
 }
 
 .col-md-4#searchArea {
-    border-style: solid;
-    border-width: 1px;
-    border-color: black;
     margin-top: 20px;
 }
 
@@ -60,4 +66,17 @@ img.forecastIcons {
 
 button {
     margin: 5px;
+    border-radius: 15px;
+    border-style: solid;
+    border-width: thin;
+    border-color: lightblue;
+    float: left;
+}
+
+#searchBtn {
+    border-style: solid;
+    border-width: thick;
+    border-color: lightblue;
+    background-color: white;
+    color: black;
 }
