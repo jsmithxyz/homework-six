@@ -1,5 +1,5 @@
-$(document).ready(function() {
-    
+$(document).ready(function () {
+
     var cities = [];
 
     var cityBtn = $("<button>");
@@ -9,12 +9,12 @@ $(document).ready(function() {
     renderCitiesOnRefresh();
 
     function currentConditions(city) {
-       var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=" + API_KEY;
+        var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=" + API_KEY;
 
-        $.ajax ({
+        $.ajax({
             url: queryURL,
             method: "GET",
-        }).then(function(response){
+        }).then(function (response) {
 
             var cityName = $("<h1>");
             cityName.addClass("headerStyle");
@@ -25,15 +25,15 @@ $(document).ready(function() {
             dateNow.text(moment().format('L'));
 
             var weatherIcon = $("<img>");
-            weatherIcon.attr("src", "http://openweathermap.org/img/wn/"+response.weather[0].icon+"@2x.png");
+            weatherIcon.attr("src", "http://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png");
 
             var temperature = $("<div>");
             var kelvin = response.main.temp;
-            var fahrenheit = (kelvin - 273.15) * (9/5) + 32;
-            temperature.text("Temp: "+ fahrenheit.toFixed(1) + "°F");
+            var fahrenheit = (kelvin - 273.15) * (9 / 5) + 32;
+            temperature.text("Temp: " + fahrenheit.toFixed(1) + "°F");
 
             var humidity = $("<div>");
-            humidity.text("Humidity: " + response.main.humidity + "%"); 
+            humidity.text("Humidity: " + response.main.humidity + "%");
 
             var windSpeed = $("<div>");
             windSpeed.text("Wind Speed: " + response.wind.speed + " MPH");
@@ -51,41 +51,41 @@ $(document).ready(function() {
 
             var lon = response.coord.lon;
             var lat = response.coord.lat;
-            
-            uvIndex(lat, lon); 
+
+            uvIndex(lat, lon);
 
         });
-        
-    }
-    
-    function uvIndex(lat, lon) {
-        var queryURL = "http://api.openweathermap.org/data/2.5/uvi?appid="+ API_KEY +"&lat="+ lat +"&lon="+ lon;
- 
-         $.ajax ({
-             url: queryURL,
-             method: "GET",
-         }).then(function(response){
-             console.log(response);
-             var uv = $("<div>");
-             uv.text("UV Index: "+ response.value);
-             uv.appendTo(".conditions");
-         });
- 
-     }
 
-     function fiveDay(city) {
-         var queryURL = "http://api.openweathermap.org/data/2.5/forecast?q="+ city + "&appid="+ API_KEY;
- 
-         $.ajax ({
-             url: queryURL,
-             method: "GET",
-         }).then(function(response){
+    }
+
+    function uvIndex(lat, lon) {
+        var queryURL = "http://api.openweathermap.org/data/2.5/uvi?appid=" + API_KEY + "&lat=" + lat + "&lon=" + lon;
+
+        $.ajax({
+            url: queryURL,
+            method: "GET",
+        }).then(function (response) {
+            console.log(response);
+            var uv = $("<div>");
+            uv.text("UV Index: " + response.value);
+            uv.appendTo(".conditions");
+        });
+
+    }
+
+    function fiveDay(city) {
+        var queryURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + API_KEY;
+
+        $.ajax({
+            url: queryURL,
+            method: "GET",
+        }).then(function (response) {
             console.log(response);
             $("#fiveDayBox").empty();
-            var counter = 1;
+            var counter = 0;
 
-            for(var i = 3; i < response.list.length; i+=8) {
-                 
+            for (var i = 3; i < response.list.length; i += 8) {
+
                 var card = $("<div>");
                 card.addClass("forecastCard");
 
@@ -95,11 +95,11 @@ $(document).ready(function() {
 
                 var symbol = $("<img>");
                 symbol.addClass("forecastIcons");
-                symbol.attr("src", "http://openweathermap.org/img/wn/"+response.list[i].weather[0].icon+"@2x.png");
+                symbol.attr("src", "http://openweathermap.org/img/wn/" + response.list[i].weather[0].icon + "@2x.png");
                 symbol.appendTo(card);
 
                 var kelvin = response.list[i].main.temp_max;
-                var fahrenheit = (kelvin - 273.15) * (9/5) + 32;
+                var fahrenheit = (kelvin - 273.15) * (9 / 5) + 32;
                 var temperature = $("<p>");
                 temperature.text("Temperature: " + fahrenheit.toFixed(1) + "°F");
                 temperature.appendTo(card);
@@ -111,12 +111,12 @@ $(document).ready(function() {
 
                 $("#fiveDayBox").append(card);
             }
-    
-    });
+
+        });
 
     }
-    
-    $("#searchBtn").on("click", function(event){
+
+    $("#searchBtn").on("click", function (event) {
         event.preventDefault();
         $(".conditions").empty();
         var city = $("#inputCity").val().trim();
@@ -126,19 +126,19 @@ $(document).ready(function() {
         fiveDay(city);
 
         localStorage.setItem("citiesSearched", JSON.stringify(cities));
-        
+
         renderCities();
 
 
     })
 
-    $("#searchArea").on("click", function(event){
-        if(event.target.matches("button.cityButton")) {
+    $("#searchArea").on("click", function (event) {
+        if (event.target.matches("button.cityButton")) {
             event.preventDefault();
-            
+
 
             var city = $(event.target).text();
-            for(var i = 0; i < cities.length; i++) {
+            for (var i = 0; i < cities.length; i++) {
                 $(".conditions").empty();
                 if (city === cities[i]) {
                     currentConditions(city);
@@ -150,33 +150,34 @@ $(document).ready(function() {
 
             localStorage.setItem("citiesSearched", JSON.stringify(cities));
 
-            
-      }});
+
+        }
+    });
 
 
-    
+
     function renderCities() {
 
         $(".btnArea").empty();
 
         for (var i = 0; i < cities.length; i++) {
-          var a = $("<button>");
-          a.addClass("cityButton");
-          a.attr("data-name", cities[i]);
-          a.text(cities[i]);
+            var a = $("<button>");
+            a.addClass("cityButton");
+            a.attr("data-name", cities[i]);
+            a.text(cities[i]);
 
-          $(".btnArea").append(a);
+            $(".btnArea").append(a);
 
-          localStorage.setItem("citiesSearched", JSON.stringify(cities));
+            localStorage.setItem("citiesSearched", JSON.stringify(cities));
 
         }
-      }
+    }
 
-      function renderCitiesOnRefresh() {
+    function renderCitiesOnRefresh() {
         var retrievedCities = localStorage.getItem("citiesSearched");
         var citiesReturned = JSON.parse(retrievedCities);
         if (citiesReturned != null) {
-        var cities = citiesReturned;
+            var cities = citiesReturned;
         }
         else {
             return;
@@ -184,12 +185,12 @@ $(document).ready(function() {
 
         $(".btnArea").empty();
 
-          var a = $("<button>");
-          a.addClass("cityButton");
-          a.attr("data-name", cities[cities.length - 1]);
-          a.text(cities[cities.length - 1]);
+        var a = $("<button>");
+        a.addClass("cityButton");
+        a.attr("data-name", cities[cities.length - 1]);
+        a.text(cities[cities.length - 1]);
 
-          $(".btnArea").append(a);
+        $(".btnArea").append(a);
 
 
         currentConditions(cities[cities.length - 1]);
@@ -200,41 +201,66 @@ $(document).ready(function() {
         localStorage.setItem("citiesSearched", JSON.stringify(cities));
 
         return cities;
-        
-      }
 
-      var options = {
+    }
+
+    var options = {
         enableHighAccuracy: true,
         timeout: 5000,
         maximumAge: 0
-      };
-      
-      function success(pos) {
+    };
+
+    function success(pos) {
         var crd = pos.coords;
-      
+
         console.log('Your current position is:');
         console.log(`Latitude : ${crd.latitude}`);
         console.log(`Longitude: ${crd.longitude}`);
         console.log(`More or less ${crd.accuracy} meters.`);
 
         currentLocation(crd.latitude, crd.longitude);
-      }
-      
-      function error(err) {
+    }
+
+    function error(err) {
         console.warn(`ERROR(${err.code}): ${err.message}`);
-      }
-      
-      navigator.geolocation.getCurrentPosition(success, error, options);
+    }
 
-      function currentLocation(latitude, longitude) {
-        var queryURL = "http://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid="+ API_KEY;
+    navigator.geolocation.getCurrentPosition(success, error, options);
 
-        $.ajax ({
+    function currentLocation(latitude, longitude) {
+        var queryURL = "http://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid=" + API_KEY;
+
+        $.ajax({
             url: queryURL,
             method: "GET",
-        }).then(function(response){
-           console.log(response);
-          
+        }).then(function (response) {
+            console.log(response);
+
+            var currentLocation = $("<div>");
+            currentLocation.addClass("currentLocation");
+
+            var yourName = $("<h4>");
+            yourName.text(response.name);
+            yourName.appendTo(currentLocation);
+
+            var yourIcon = $("<img>");
+            yourIcon.addClass("yourIcon");
+            yourIcon.attr("src", "http://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png");
+            yourIcon.appendTo(currentLocation);
+
+            var yourTemp = $("<p>");
+            var kelvin = response.main.temp_max;
+            var fahrenheit = (kelvin - 273.15) * (9 / 5) + 32;
+            yourTemp.text("Temperature: " + fahrenheit.toFixed(1) + "°F");
+            yourTemp.appendTo(currentLocation);
+
+            var yourHumidity = $("<p>");
+            yourHumidity.text("Humidity: " + response.main.humidity);
+            yourHumidity.appendTo(currentLocation);
+
+
+            currentLocation.appendTo("#yourLocation");
+
         })
 
     }

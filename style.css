@@ -92,3 +92,11 @@ button {
     background-color: white;
     color: #343a40;
 }
+
+#yourLocation {
+    text-align: center;
+    background-color: white;
+    width: fit-content;
+    border-style: double;
+    font-family: 'Bree Serif', serif;
+}
