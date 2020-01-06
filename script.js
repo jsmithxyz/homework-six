@@ -9,7 +9,7 @@ $(document).ready(function () {
     renderCitiesOnRefresh();
 
     function currentConditions(city) {
-        var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=" + API_KEY;
+        var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=" + API_KEY;
 
         $.ajax({
             url: queryURL,
@@ -25,7 +25,7 @@ $(document).ready(function () {
             dateNow.text(moment().format('L'));
 
             var weatherIcon = $("<img>");
-            weatherIcon.attr("src", "http://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png");
+            weatherIcon.attr("src", "https://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png");
 
             var temperature = $("<div>");
             var kelvin = response.main.temp;
@@ -59,7 +59,7 @@ $(document).ready(function () {
     }
 
     function uvIndex(lat, lon) {
-        var queryURL = "http://api.openweathermap.org/data/2.5/uvi?appid=" + API_KEY + "&lat=" + lat + "&lon=" + lon;
+        var queryURL = "https://api.openweathermap.org/data/2.5/uvi?appid=" + API_KEY + "&lat=" + lat + "&lon=" + lon;
 
         $.ajax({
             url: queryURL,
@@ -95,7 +95,7 @@ $(document).ready(function () {
 
                 var symbol = $("<img>");
                 symbol.addClass("forecastIcons");
-                symbol.attr("src", "http://openweathermap.org/img/wn/" + response.list[i].weather[0].icon + "@2x.png");
+                symbol.attr("src", "https://openweathermap.org/img/wn/" + response.list[i].weather[0].icon + "@2x.png");
                 symbol.appendTo(card);
 
                 var kelvin = response.list[i].main.temp_max;
@@ -228,7 +228,7 @@ $(document).ready(function () {
     navigator.geolocation.getCurrentPosition(success, error, options);
 
     function currentLocation(latitude, longitude) {
-        var queryURL = "http://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid=" + API_KEY;
+        var queryURL = "https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid=" + API_KEY;
 
         $.ajax({
             url: queryURL,
@@ -245,7 +245,7 @@ $(document).ready(function () {
 
             var yourIcon = $("<img>");
             yourIcon.addClass("yourIcon");
-            yourIcon.attr("src", "http://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png");
+            yourIcon.attr("src", "https://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png");
             yourIcon.appendTo(currentLocation);
 
             var yourTemp = $("<p>");
